@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const app = express();
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 let corsOptions = {
   origin: "http://localhost:8081",
@@ -24,11 +24,13 @@ db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
 
+app.use("/api", require("./app/routes/tutorial.route"));
+
 // simple route
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.json({ message: "Welcome to sanchit's application." });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+  console.log(`Server is running on port http://localhost:${PORT}.`);
 });
